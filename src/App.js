@@ -22,9 +22,13 @@ const channel = chatClient.channel('messaging', 'godevs', {
   name: 'reactions to React',
 });
 
-const app = () => {
+const filters = { type: 'messaging', members: { $in: ['plain-dew-4'] } };
+const sort = { last_message_at: -1 };
+const channels = chatClient.queryChannels(filters, sort);
+
+const App = () => (
   <Chat client={chatClient} theme='messaging light'>
-    <Channel channel={channel}>
+    <Channel filters={filters} sort={sort} channel={channel} >
       <Window>
         <ChannelHeader />
         <MessageList />
@@ -33,6 +37,6 @@ const app = () => {
       <Thread />
     </Channel>
   </Chat>
-};
+);
 
 export default App;
